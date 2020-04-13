@@ -1,21 +1,36 @@
 package ru.otus.highloadarch.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.data.relational.core.mapping.Column;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-//@Table("user")
+@Data
+@AllArgsConstructor
 public class User {
     @Id
     private Long id;
+    @NotEmpty(message = "*Пожалуйста введите имя")
+    @Column("f_name")
     private String firstName;
+    @NotEmpty(message = "*Пожалуйста введите фамилию")
+    @Column("l_name")
     private String lastName;
     private String sex;
+    @Email(message = "*Пожалуйста введите корректный Email")
+    @Column("email")
     private String eMail;
     private String interests;
+    @Column("password")
+    @Length(min = 5, message = "*Ваш пароль должен содержать минимум 5 символов")
+    @NotEmpty(message = "*Пожалуйста введите пароль")
+    private String password;
     private Set<UserRole> roles = new HashSet<>();
 
     public User() {
@@ -29,76 +44,6 @@ public class User {
         this.interests = interests;
     }
 
-    public void addUserRole(Role role){
-        this.roles.add(new UserRole(role.getId()));
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String geteMail() {
-        return eMail;
-    }
-
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
-    }
-
-    public String getInterests() {
-        return interests;
-    }
-
-    public void setInterests(String interests) {
-        this.interests = interests;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(sex, user.sex) &&
-                Objects.equals(eMail, user.eMail) &&
-                Objects.equals(interests, user.interests);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, sex, eMail, interests);
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -108,6 +53,12 @@ public class User {
                 ", sex='" + sex + '\'' +
                 ", eMail='" + eMail + '\'' +
                 ", interests='" + interests + '\'' +
+                ", roles=" + roles +
                 '}';
+    }
+
+    public void addUserRole(Role role) {
+        UserRole userRole = new UserRole(role.getId());
+        this.roles.add(userRole);
     }
 }

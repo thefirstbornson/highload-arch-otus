@@ -8,7 +8,9 @@ import org.springframework.data.relational.core.mapping.Column;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -31,7 +33,7 @@ public class User {
     @Length(min = 5, message = "*Ваш пароль должен содержать минимум 5 символов")
     @NotEmpty(message = "*Пожалуйста введите пароль")
     private String password;
-    private Set<UserRole> roles = new HashSet<>();
+    private List<UserRole> roles = new ArrayList<>();
 
     public User() {
     }

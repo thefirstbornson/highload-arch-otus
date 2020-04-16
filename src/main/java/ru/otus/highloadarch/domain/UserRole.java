@@ -11,4 +11,5 @@ import org.springframework.data.relational.core.mapping.Table;
 public class UserRole {
     @Column("role")
     private Long role;
+
 }

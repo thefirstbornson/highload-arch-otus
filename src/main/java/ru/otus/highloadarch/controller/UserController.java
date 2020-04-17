@@ -37,8 +37,8 @@ public class UserController {
 
     @PostMapping(value="/users")
     public ResponseEntity<?> saveUser(@RequestBody User requestBody){
-        userCrudService.create(requestBody);
-        return new ResponseEntity<>("{\"status\":\"saved\"}", HttpStatus.CREATED);
+        User newUser = userCrudService.create(requestBody);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
 

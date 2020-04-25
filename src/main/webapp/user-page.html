@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- <link rel="stylesheet" href="example.css"> -->
+    <meta charset="UTF-8">
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/jquery.cookie.js"></script>
+    <style>
+        @import 'https://fonts.googleapis.com/css?family=Open+Sans:400,400i&subset=cyrillic';
+        body {
+            margin: 0;
+            background: #F7F7F7;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        #header {
+            border: 1px dotted black;
+            background: #ffd500;
+        }
+        
+        #nav {
+            /* width: 100%; */
+            margin: 0 auto;
+            text-align: center
+        }
+        
+        #nav li {
+            display: inline;
+        }
+        
+        div {
+            /* border: 1px solid black; */
+            /* Параметры границы */
+            /* background: #fc3; */
+            /* Цвет фона
+            padding: 10px;
+            Поля вокруг текста */
+            /* background-color: blueviolet; */
+        }
+        
+        #allcontent {
+            width: 1000px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            /* background-color: #675c47; */
+            margin-left: auto;
+            margin-right: auto;
+            /* position: absolute; */
+            top: 0;
+            /* bottom: 0; */
+        }
+        
+        #left-menu {
+            padding: 5px;
+            margin: 0px 810px 10px 5px;
+        }
+        
+        #left-menu ul {
+            padding-left: 0;
+        }
+        
+        #left-menu li {
+            list-style-type: none
+        }
+        
+        #main {
+            padding: 5px;
+            width: 780px;
+            float: right;
+            margin-right: 5px;
+            margin-left: 5px;
+            overflow: hidden;
+            position: relative;
+            /* width: 100%; */
+            height: 100%;
+        }
+        
+        #main-photo {
+            padding: 5px;
+            display: inline-block;
+            width: 120px;
+            vertical-align: top;
+            border-radius: 20px;
+            background: white;
+        }
+        
+        #main-profile {
+            display: inline-block;
+            width: 550px;
+            margin: 0px, 0px, 5px, 0px;
+            border-radius: 20px;
+            padding: 5px;
+            background: white;
+            color: #7b7b7b;
+        }
+        
+        #name {
+            font-size: 20px;
+        }
+    </style>
+    <script>
+
+        var queryString = window.location.search;
+        var urlParams = new URLSearchParams(queryString);
+        var userId = urlParams.get('userId')
+        $.ajax({
+            type: 'GET',
+            url: '/users/'+userId,
+            success: (function (user) {
+                console.log(user);
+                $('#name').html(user.firstName + " " + user.lastName);
+                $('#age').html(user.age);
+                $('#sex').html(user.sex);
+                $('#city').html(user.city);
+                $('#interests').html(user.interests);
+                $('#e-mail').html(user.email);
+                // window.location.href = '/user-page.html';
+            }),
+            error: (function () {
+                window.location.href = '/login.html';
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <div id="header">
+        <nav id="nav">
+            <ul>
+                <li><a href="#search">Поиск</a></li>
+                <li><a href="/logout">Выход</span></a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="allcontent">
+        <div id="main">
+            <div id="main-photo">
+                <img src="https://html5book.ru/wp-content/uploads/2016/10/profile-image.png">
+            </div>
+            <div id="main-profile">
+                <div>
+                    <label id="name">Имя</label>
+                </div>
+                <div>
+                    <table>
+                        <tr>
+                            <td>Возраст</td>
+                            <td id="age">age</td>
+                        </tr>
+                        <tr>
+                            <td>Пол</td>
+                            <td id="sex">sex</td>
+                        </tr>
+                        <tr>
+                            <td>Город</td>
+                            <td id="city">city</td>
+                        </tr>
+                        <tr>
+                            <td>Интересы</td>
+                            <td id="interests">interests</td>
+                        </tr>
+                        <tr>
+                            <td>Электронная почта</td>
+                            <td id="e-mail">e-mail</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="left-menu">
+            <ul>
+                <li><a href="#my-page">Моя страница</a></li>
+                <li><a href="#friends">Друзья</span></a></li>
+            </ul>
+        </div>
+    </div>
+</body>

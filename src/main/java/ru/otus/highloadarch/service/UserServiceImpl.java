@@ -16,19 +16,20 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository
-//            , BCryptPasswordEncoder bCryptPasswordEncoder
+            , BCryptPasswordEncoder bCryptPasswordEncoder
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-//        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
     public User create(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         Role role = roleRepository.findById(1L).get();
         user.addUserRole(role);
         return userRepository.save(user);

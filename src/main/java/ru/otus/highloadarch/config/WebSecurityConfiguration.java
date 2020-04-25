@@ -47,7 +47,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/registration.html.html").permitAll();
+        http.authorizeRequests().antMatchers("/users*").permitAll();
         http.authorizeRequests().antMatchers("/rest/**").authenticated();
+        http.authorizeRequests().antMatchers("/user-page.html").authenticated();
+//        http.authorizeRequests()
+//                .antMatchers("/anonymous*").anonymous()
+//                .antMatchers("/login*").permitAll()
+//                .anyRequest().authenticated();
+//        http.authorizeRequests().antMatchers("/index.html").authenticated();
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
         http.formLogin().successHandler(authenticationSuccessHandler);
         http.formLogin().failureHandler(authenticationFailureHandler);
@@ -58,6 +66,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //        http.addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class);
 
     }
-
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers( "/css/**", "/js/**", "/img/**");
+    }
 
 }

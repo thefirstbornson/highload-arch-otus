@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title>Halloween Application</title>
+
+	<script src="lib/jquery.min.js"></script>
+	<script src="lib/jquery.cookie.js"></script>
+	<script>
+		$.ajax({
+			type: 'GET',
+			url: '/current-user',
+			// ,
+			// success: (function (data) {
+			// 	window.location.href = '/user-page.html';
+			}).done(function(data) {
+			window.location.href = '/user-page.html?userId='+data.id;
+			}).fail (function () {
+				window.location.href = '/login.html';
+			});
+	</script>
+</head>
+<body>
+
+</body>
+</html>

@@ -25,25 +25,19 @@ public class User {
     @Column("l_name")
     private String lastName;
     private String sex;
+    private Integer age;
+
     @Email(message = "*Пожалуйста введите корректный Email")
     @Column("email")
     private String eMail;
+
     private String interests;
     @Column("password")
     @Length(min = 5, message = "*Ваш пароль должен содержать минимум 5 символов")
     @NotEmpty(message = "*Пожалуйста введите пароль")
     private String password;
     private List<UserRole> roles = new ArrayList<>();
-
     public User() {
-    }
-
-    public User(String firstName, String lastName, String sex, String eMail, String interests) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.sex = sex;
-        this.eMail = eMail;
-        this.interests = interests;
     }
 
     @Override
@@ -53,10 +47,24 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", sex='" + sex + '\'' +
+                ", age=" + age +
                 ", eMail='" + eMail + '\'' +
                 ", interests='" + interests + '\'' +
+                ", password='" + password + '\'' +
                 ", roles=" + roles +
                 '}';
+    }
+
+    public User(String firstName, String lastName, String sex, Integer age, String eMail, String interests,
+              String password, List<UserRole> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.sex = sex;
+        this.age = age;
+        this.eMail = eMail;
+        this.interests = interests;
+        this.password = password;
+        this.roles = roles;
     }
 
     public void addUserRole(Role role) {

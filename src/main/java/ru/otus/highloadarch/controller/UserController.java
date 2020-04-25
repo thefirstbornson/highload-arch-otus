@@ -38,11 +38,6 @@ public class UserController {
 
     @PostMapping(value="/users")
     public RedirectView saveUser(@ModelAttribute("register_form") User requestBody){
-        User newUser = userService.create(requestBody);
-//        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-//        ModelAndView model = new ModelAndView();
-//        model.addObject("newUser", new User());
-//        model.setViewName("index.html");
         return new RedirectView("/");
     }
 
@@ -50,22 +45,6 @@ public class UserController {
     public ResponseEntity<User> currentUserName(Principal principal) {
         User user = userService.findByEmail(principal.getName());
         return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    static class UserIdResponse {
-        private String userId;
-
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
-
-        public UserIdResponse(String userId) {
-            this.userId = userId;
-        }
     }
 
 

@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import ru.otus.highloadarch.domain.User;
 
 public interface UserRepository extends CrudRepository<User, Long> {
-    @Query("select * from User u where u.email = :email")
+    @Query("select * from user u where u.email = :email")
     User findByEMail (String email);
 }

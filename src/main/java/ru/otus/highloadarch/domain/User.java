@@ -5,16 +5,16 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
+@Table("user")
 public class User {
     @Id
     private Long id;

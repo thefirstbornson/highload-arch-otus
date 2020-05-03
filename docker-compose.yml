@@ -1,0 +1,35 @@
+version: '3'
+services:
+  mysql-db:
+    image: mysql:8.0.17
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=socialnetwork
+    ports:
+      - "3310:3306"
+    volumes:
+      - database:/var/lib/mysql:rw
+  hla:
+    build: .
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/socialnetwork?useUnicode=true&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    ports:
+      - "8080:8080"
+      - "8000:8000"
+  nginx_client:
+    build: ./client
+    ports:
+      - "80:80"
+    volumes:
+      - ./client/html:/usr/share/nginx/html
+    links:
+      - hla
+    depends_on:
+      - hla
+volumes:
+  database:

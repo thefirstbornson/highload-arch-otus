@@ -24,7 +24,7 @@ services:
   nginx_client:
     build: ./client
     ports:
-      - "80:80"
+      -  "80:8888"
     volumes:
       - ./client/html:/usr/share/nginx/html
     links:

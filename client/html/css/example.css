@@ -1,0 +1,182 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+@import 'https://fonts.googleapis.com/css?family=Open+Sans:400,400i&subset=cyrillic';
+body {
+    margin: 0;
+    background: #F7F7F7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    height: 100%;
+    display: flex;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#form-password {
+    width: 550px;
+    height: 200px;
+    background: #ffd500;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#register{
+    position: absolute;
+    top:500px;
+}
+
+#form-register {
+    width: 650px;
+    height: 435px;
+    background: #ffd500;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#form-names {
+    display: flex;
+}
+
+#age {
+    width: 40%;
+}
+
+#form-names input {
+    vertical-align: middle;
+    padding: 10px;
+    border: 2px solid rgb(255, 255, 255);
+    width: 100%;
+}
+
+.profile {
+    width: 240px;
+    float: left;
+    text-align: center;
+    padding: 30px;
+}
+
+form {
+    background: white;
+    float: left;
+    width: calc(100% - 240px);
+    padding: 30px;
+    border-radius: 0 20px 20px 0;
+    color: #7b7b7b;
+    vertical-align: middle;
+}
+
+form div {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 400;
+    position: relative;
+    margin-top: 50px;
+}
+
+label,
+span {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    padding: 10px 15px;
+    border-width: 0;
+    background: #e6e6e6;
+    outline: none;
+    vertical-align: middle;
+    padding: 10px;
+    border: 2px solid rgb(255, 255, 255);
+    width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, .2);
+}
+
+.inline-radio {
+    display: flex;
+    border-radius: 3px;
+    overflow: hidden;
+    width: 40%;
+    position: relative;
+}
+
+.inline-radio div {
+    position: relative;
+    flex: 1;
+}
+
+.inline-radio span {
+    margin-right: 10px;
+    line-height: 27px
+}
+
+.inline-radio input {
+    width: 100%;
+    height: 20px;
+    opacity: 0;
+}
+
+.inline-radio label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #b6b6b6;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.inline-radio input:checked+label {
+    background: #ffd500;
+    font-weight: 500;
+    color: #fff;
+}
+
+button {
+    padding: 10px 0;
+    border-width: 0;
+    display: block;
+    width: 120px;
+    margin: 25px auto 0;
+    background: #60e6c5;
+    color: white;
+    font-size: 14px;
+    outline: none;
+    text-transform: uppercase;
+}

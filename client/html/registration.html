@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/example.css">
+    <script src="js/lib/jquery.min.js"></script>
+    <script src="js/lib/jquery.cookie.js"></script>
+</head>
+
+<body>
+    <div id="form-register">
+        <div class="profile"><img src="https://html5book.ru/wp-content/uploads/2016/10/profile-image.png">
+            <h1>Регистрация</h1>
+        </div>
+        <form id="register_form" method="post" action="api/users">
+            <div id="form-names">
+                <input id="firstName" type="text" name="firstName" required placeholder="Имя">
+                <input id="lastName" type="text" name="lastName" required placeholder="Фамилия">
+            </div>
+
+            <div>
+                <input id="age" type="text" name="age" required placeholder="Возраст">
+            </div>
+
+            <div class="inline-radio">
+                <span>Пол</span>
+                <div><input type="radio" name="sex" value="М"><label>М</label></div>
+                <div><input type="radio" name="sex" value="Ж"><label>Ж</label></div>
+            </div>
+
+            <div>
+                <input id="eMail" type="email" name="eMail" required placeholder="E-mail">
+            </div>
+            <div>
+                <input id="password" type="password" name="password" required placeholder="Пароль">
+            </div>
+            <div>
+                <input id="interests" type="text" name="interests" placeholder="Интересы">
+            </div>
+
+            <div class="select-arrow"></div>
+            <button type="submit">Регистрация</button>
+        </form>
+    </div>
+</body>
+<script>
+    function sendJSON() {
+
+        // var result = document.querySelector('.result');
+        var name = document.querySelector('#name');
+        var last_name = document.querySelector('#last_name');
+        var age = document.querySelector('#age');
+        var sex = document.querySelector('input[name="member"]:checked').value;
+        var email = document.querySelector('#email');
+        var password = document.querySelector('#password');
+        var interests = document.querySelector('#interests');
+
+        // Creating a XHR object
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost/api/users";
+
+        $('#register_form').on('submit', function(event) {
+            event.preventDefault();
+            var json = JSON.stringify({
+                "name": name.value,
+                "last_name": last_name.value,
+                "age": age.value,
+                "sex": sex.value,
+                "email": email.value,
+                "password": password.value,
+                "interests": interests.value
+            });
+            console.log(json);
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost/api/users',
+                dataType: 'json',
+                data: json,
+                contentType: 'application/json',
+                success: function(data) {
+                    alert(data)
+                }
+            });
+
+            // // open a connection
+            // xhr.open("POST", url, true);
+            //
+            // // Set the request header i.e. which type of content you are sending
+            // xhr.setRequestHeader("Content-Type", "application/json");
+            //
+            // // Create a state change callback
+            // // xhr.onreadystatechange = function () {
+            // //     if (xhr.readyState === 4 && xhr.status === 200) {
+            // //
+            // //         // Print received data from server
+            // //         result.innerHTML = this.responseText;
+            // //     }
+            // // };
+            //
+            // // Converting JSON data to string
+            // var data = JSON.stringify({
+            //     "name": name.value,
+            //     "email": email.value
+            // });
+            //
+            // // Sending data with the request
+            // xhr.send(data);
+        });
+    }
+</script>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title>HiglLoad Application</title>
+	<script src="js/lib/jquery.min.js"></script>
+	<script src="js/lib/jquery.cookie.js"></script>
+	<script>
+		$.ajax({
+			type: 'GET',
+			url: '/api/current-user',
+			}).done(function(data) {
+			window.location.href = '/user-page.html?userId='+data.id;
+			}).fail (function () {
+				window.location.href = '/login.html';
+			});
+	</script>
+</head>
+<body>
+
+</body>
+</html>

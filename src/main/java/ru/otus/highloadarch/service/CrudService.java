@@ -10,4 +10,5 @@ public interface CrudService<T> {
     T update(User user);
     List<T> findAll();
     Optional<T> findById(long id);
+
 }

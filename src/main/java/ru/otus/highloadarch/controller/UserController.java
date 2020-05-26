@@ -1,5 +1,6 @@
 package ru.otus.highloadarch.controller;
 
+import liquibase.util.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,8 +10,11 @@ import ru.otus.highloadarch.domain.User;
 import ru.otus.highloadarch.service.UserService;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+
 
 @RestController
 public class UserController {
@@ -21,13 +25,20 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<?> getUsers() {
-        List<User> users = userService.findAll();
-        if (!users.isEmpty()){
-            return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<?> getUsers(@RequestParam(required = false) String firstNamePattern,
+                                      @RequestParam(required = false) String lastNamePattern) {
+        List<User> users;
+        if (StringUtils.isNotEmpty(firstNamePattern+lastNamePattern)){
+            users = userService.findUsersUsingPattern(firstNamePattern,lastNamePattern);
         } else {
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+            users = userService.findAll();
         }
+            if (!users.isEmpty()){
+                return new ResponseEntity<>(users, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+            }
+
     }
 
     @GetMapping("/users/{id}")
@@ -59,4 +70,13 @@ public class UserController {
         User user = userService.findByEmail(principal.getName());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @PostMapping(value = "/generate-users")
+    public ResponseEntity<?> generateUsers(@RequestParam Long count) {
+        List<User> generatedUsers = userService.generateUsers(count);
+        userService.saveAll(generatedUsers);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }

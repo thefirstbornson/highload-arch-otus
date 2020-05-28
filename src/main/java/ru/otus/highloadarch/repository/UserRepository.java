@@ -10,6 +10,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query("select * from user u where u.email = :email")
     User findByEMail (String email);
 
-    @Query("select * from user u where u.l_name like :firstNamePattern and u.f_name like :lastNamePattern order by u.id")
+    @Query("select * from user u where u.l_name like :lastNamePattern and u.f_name like :firstNamePattern order by u.id")
     List<User> findByFirstNameLikeAndLastNameLike(String firstNamePattern, String lastNamePattern);
 }

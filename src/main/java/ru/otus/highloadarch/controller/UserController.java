@@ -25,14 +25,13 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<?> getUsers(@RequestParam(required = false) String firstNamePattern,
-                                      @RequestParam(required = false) String lastNamePattern) {
+    public ResponseEntity<?> getUsers(
+            @RequestParam(required = false,defaultValue = "") String firstNamePattern,
+                                      @RequestParam(required = false,defaultValue = "") String lastNamePattern
+    ) {
         List<User> users;
-        if (StringUtils.isNotEmpty(firstNamePattern+lastNamePattern)){
             users = userService.findUsersUsingPattern(firstNamePattern,lastNamePattern);
-        } else {
-            users = userService.findAll();
-        }
+
             if (!users.isEmpty()){
                 return new ResponseEntity<>(users, HttpStatus.OK);
             } else {

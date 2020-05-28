@@ -1,7 +1,7 @@
-version: '3'
+version: '3.7'
 services:
   mysql:
-    image: mysql:8.0.17
+    image: 'percona:8.0'
     restart: always
     container_name: db-master
     environment:
@@ -14,34 +14,35 @@ services:
       - ./build_env/mysql/master.cnf:/etc/my.cnf.d/repl.cnf
       - ./build_env/mysql/master.sql:/docker-entrypoint-initdb.d/start.sql
   mysqlread1:
-    image: mysql:8.0.17
+    image: 'percona:8.0'
     container_name: db-slave1
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "socialnetwork"
+    ports:
+      - "3311:3306"
     volumes:
       - ./build_env/mysql/slave1.cnf:/etc/my.cnf.d/repl.cnf
       - ./build_env/mysql/slave.sql:/docker-entrypoint-initdb.d/start.sql
     depends_on:
       - mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "socialnetwork"
-  mysqlread2:
-    image: mysql:8.0.17
-    container_name: db-slave2
-    volumes:
-      - ./build_env/mysql/slave2.cnf:/etc/my.cnf.d/repl.cnf
-      - ./build_env/mysql/slave.sql:/docker-entrypoint-initdb.d/start.sql
-    depends_on:
-      - mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "socialnetwork"
-
+#  mysqlread2:
+#    image: 'percona:8.0'
+#    container_name: db-slave2
+#    volumes:
+#      - ./build_env/mysql/slave2.cnf:/etc/my.cnf.d/repl.cnf
+#      - ./build_env/mysql/slave.sql:/docker-entrypoint-initdb.d/start.sql
+#    depends_on:
+#      - mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: "root"
+#      MYSQL_DATABASE: "socialnetwork"
   hla:
     build: .
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-db:3306/socialnetwork?useUnicode=true&serverTimezone=UTC"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/socialnetwork?useUnicode=true&serverTimezone=UTC"
       SPRING_DATASOURCE_USERNAME: "root"
       SPRING_DATASOURCE_PASSWORD: "root"
     ports:

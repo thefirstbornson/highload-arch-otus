@@ -1,7 +1,7 @@
 server:
   port: 8080
 spring:
-  datasource:
+  datasource-write:
     url: jdbc:mysql://localhost:3306/socialnetwork?useUnicode=true&serverTimezone=UTC #${SPRING_DATASOURCE_URL}
     username: root #${SPRING_DATASOURCE_USERNAME}
     password: root #${SPRING_DATASOURCE_PASSWORD}

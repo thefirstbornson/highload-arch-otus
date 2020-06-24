@@ -43,6 +43,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/registration.html.html").permitAll();
         http.authorizeRequests().antMatchers("/users*").permitAll();
+        http.authorizeRequests().antMatchers("/read/users*").permitAll();
         http.authorizeRequests().antMatchers("/generate-users*").permitAll();
         http.authorizeRequests().antMatchers("/rest/**").authenticated();
         http.authorizeRequests().antMatchers("/user-page.html").authenticated();

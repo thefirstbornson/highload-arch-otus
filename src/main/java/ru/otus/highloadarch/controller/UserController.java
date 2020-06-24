@@ -10,11 +10,9 @@ import ru.otus.highloadarch.domain.User;
 import ru.otus.highloadarch.service.UserService;
 
 import java.security.Principal;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-
 
 @RestController
 public class UserController {
@@ -45,6 +43,34 @@ public class UserController {
         Optional<User> user = userService.findById(id);
         return user.<ResponseEntity<?>>map(u -> new ResponseEntity<>(u, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>("{\"status\":\"not found\"}", HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/read/users/{id}")
+    public ResponseEntity<?> readRepGetUser(@PathVariable("id") long id) {
+        Optional<User> user = userService.readRepFindById(id);
+        return user.<ResponseEntity<?>>map(u -> new ResponseEntity<>(u, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>("{\"status\":\"not found\"}", HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/read/users")
+    public ResponseEntity<?> readRepGetUsers(
+            @RequestParam(required = false,defaultValue = "") String firstNamePattern,
+            @RequestParam(required = false,defaultValue = "") String lastNamePattern,
+            @RequestParam(required = false,defaultValue = "") String email
+    ) {
+        List<User> users;
+        if (StringUtils.isNotEmpty(email)) {
+            users = Collections.singletonList(userService.readRepfindByEmail(email));
+        } else {
+            users = userService.readRepfindUsersUsingPattern(firstNamePattern,lastNamePattern);
+        }
+
+        if (!users.isEmpty()){
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @PostMapping(value="/users")

@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -23,21 +24,19 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJdbcRepositories(
-        jdbcOperationsRef = "writeJdbcOperations",
-        basePackages = {"ru.otus.highloadarch.repository"}
-)
+
 public class DataSourceConfigWrite extends AbstractJdbcConfiguration {
 
     @Bean
     @ConfigurationProperties("spring.datasource-write")
+    @Primary
     public DataSource writeDataSource(){
         return DataSourceBuilder.create().build();
     }
 
-    @Bean
-    NamedParameterJdbcOperations writeJdbcOperations(@Qualifier("writeDataSource") DataSource sqlServerDs) {
-        return new NamedParameterJdbcTemplate(sqlServerDs);
+    @Bean(name = "jdbcWrite")
+    @Primary
+    public JdbcTemplate jdbcTemplate(DataSource writeDataSource) {
+        return new JdbcTemplate(writeDataSource);
     }
-
 }

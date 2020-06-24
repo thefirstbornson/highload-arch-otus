@@ -42,9 +42,17 @@ services:
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/socialnetwork?useUnicode=true&serverTimezone=UTC"
-      SPRING_DATASOURCE_USERNAME: "root"
-      SPRING_DATASOURCE_PASSWORD: "root"
+      SPRING_DATASOURCE-WRITE_JDBCURL: "jdbc:mysql://mysql:3306/socialnetwork?useUnicode=true&serverTimezone=UTC"
+      SPRING_DATASOURCE-WRITE_USERNAME: "root"
+      SPRING_DATASOURCE-WRITE_PASSWORD: "root"
+      SPRING_DATASOURCE-READ_JDBCURL: "jdbc:mysql://mysqlread1:3306/socialnetwork?useUnicode=true&serverTimezone=UTC"
+      SPRING_DATASOURCE-READ_USERNAME: "root"
+      SPRING_DATASOURCE-READ_PASSWORD: "root"
+      SPRING_DATASOURCE-READ_HIKARI_MINIMUMIDLE: 2
+      SPRING_DATASOURCE-READ_HIKARI_MAXIMUMPOOLSIZE: 10
+      SPRING_DATASOURCE-READ_HIKARI_IDLETIMEOUT: 120000
+      SPRING_DATASOURCE-READ_HIKARI_CONNECTIONTIMEOUT: 300000
+      SPRING_DATASOURCE-READ_HIKARI_LEAKDETECTIONTHRESHOLD: 300000
     ports:
       - "8080:8080"
       - "8000:8000"
